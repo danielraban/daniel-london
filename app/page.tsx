@@ -22,6 +22,14 @@ export default function Page() {
         responsibly for the betterment of society.
         <br />
         <br />
+        🎶 Beyond the lines of code, I'm deeply entrenched in the pulsating rhythms of techno and house
+        music, where every beat tells a story. Cycling through the city streets,
+        attending electrifying concerts, and jet-setting to new destinations
+        fuel my adventurous spirit. Having called both the US and the UK home,
+        I've savored the diverse flavors of Atlanta's BBQ and tacos, while also
+        relishing the beauty of British landscapes.
+        <br />
+        <br />
         🎨 AI art is another frontier I've eagerly embraced, marveling at the
         fusion of creativity and algorithms. Through Python-powered LLMs (Large
         Language Models), I'm delving into the limitless possibilities of
@@ -34,13 +42,7 @@ export default function Page() {
         ⚽ Living in the heart of East London, I'm not only surrounded by the
         vibrant pulse of the city but also by the spirit of West Ham United
         Football Club. Supporting my local team is a passion that runs deep,
-        adding an extra layer of excitement to my life. 🎶 Beyond the lines of
-        code, I'm deeply entrenched in the pulsating rhythms of techno and house
-        music, where every beat tells a story. Cycling through the city streets,
-        attending electrifying concerts, and jet-setting to new destinations
-        fuel my adventurous spirit. Having called both the US and the UK home,
-        I've savored the diverse flavors of Atlanta's BBQ and tacos, while also
-        relishing the beauty of British landscapes.
+        adding an extra layer of excitement to my life. 
         <br />
         <br />
         💡 Embracing life with unyielding honesty and tenacity, I see each
