@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function Page() {
   return (
@@ -14,13 +14,33 @@ export default function Page() {
         impact.
         <br />
         <br />
-        🎶 Beyond the lines of code, I'm deeply entrenched in the pulsating
-        rhythms of techno and house music, where every beat tells a story.
-        Cycling through the city streets, attending electrifying concerts, and
-        jet-setting to new destinations fuel my adventurous spirit. Having
-        called both the US and the UK home, I've savored the diverse flavors of
-        Atlanta's BBQ and tacos, while also relishing the beauty of British
-        landscapes.
+        🤖 Delving into the realm of artificial intelligence has become a
+        newfound passion of mine. Beyond just coding, I'm fascinated by the
+        ethical implications of AI and its potential to reshape our world.
+        Exploring the ethical dimensions of AI is not just a professional
+        interest but a personal mission, as I believe in leveraging technology
+        responsibly for the betterment of society.
+        <br />
+        <br />
+        🎨 AI art is another frontier I've eagerly embraced, marveling at the
+        fusion of creativity and algorithms. Through Python-powered LLMs (Large
+        Language Models), I'm delving into the limitless possibilities of
+        AI-generated art, experimenting with neural networks to unlock new forms
+        of expression and creativity. Blending technology with artistry, I'm
+        captivated by the collaborative dance between human ingenuity and
+        machine intelligence.
+        <br />
+        <br />
+        ⚽ Living in the heart of East London, I'm not only surrounded by the
+        vibrant pulse of the city but also by the spirit of West Ham United
+        Football Club. Supporting my local team is a passion that runs deep,
+        adding an extra layer of excitement to my life. 🎶 Beyond the lines of
+        code, I'm deeply entrenched in the pulsating rhythms of techno and house
+        music, where every beat tells a story. Cycling through the city streets,
+        attending electrifying concerts, and jet-setting to new destinations
+        fuel my adventurous spirit. Having called both the US and the UK home,
+        I've savored the diverse flavors of Atlanta's BBQ and tacos, while also
+        relishing the beauty of British landscapes.
         <br />
         <br />
         💡 Embracing life with unyielding honesty and tenacity, I see each
