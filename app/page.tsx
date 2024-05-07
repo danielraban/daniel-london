@@ -1,16 +1,7 @@
+import Badge from './components/badge';
 import Link from 'next/link';
 import React from 'react';
-
 export default function Page() {
-  function Badge(props) {
-    return (
-      <a
-        {...props}
-        target="_blank"
-        className="inline-flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 text-sm leading-4 text-neutral-900 no-underline dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
-      />
-    );
-  }
   return (
     <div>
       <section>
@@ -100,7 +91,7 @@ export default function Page() {
           <div>
             <img
               className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg"
+              src="/images/aod.png"
               alt=""
             />
           </div>
