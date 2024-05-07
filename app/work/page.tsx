@@ -111,7 +111,7 @@ export default function Page() {
                 src="/rxjs.svg"
               />
               RxJS
-            </Badge>,{' '}
+            </Badge>,{'&' }
             <Badge href="https://rubyonrails.org/">
               <img
                 className="!mr-1"
