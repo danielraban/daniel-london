@@ -62,7 +62,7 @@ export default function Page() {
           href={'/art'}
           className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1"
         >
-          see more of my art
+          see more of my artwork
         </Link>
       </section>
     </div>
