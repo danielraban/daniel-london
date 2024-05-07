@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <>
       <section className="mb-4">
-        <h1 className="font-medium text-2xl mb-4 tracking-tighter">my work</h1>
+        <h1 className="font-medium text-2xl mb-4 tracking-tighter">work</h1>
         <p className="prose prose-neutral dark:prose-invert">
           🚀 Hey there! I'm a dynamic and results-driven Fullstack Software
           Engineer with a knack for thinking outside the box. My passion lies in
@@ -13,6 +13,7 @@ export default function Page() {
           design, development, and implementation, I thrive in the fast-paced
           world of software development.
         </p>
+        <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
         <p className="prose prose-neutral dark:prose-invert">
           💻 Specializing in the entire software development lifecycle, I'm your
           go-to guru for designing sleek interfaces, integrating complex
@@ -22,6 +23,7 @@ export default function Page() {
           Rails. Whether it's diving deep into database analysis or architecting
           cutting-edge solutions, I'm always up for the challenge.
         </p>
+        <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
         <p className="prose prose-neutral dark:prose-invert">
           📝 Beyond just coding, I excel in translating ideas into actionable
           plans, crafting meticulous documentation, and conducting thorough
