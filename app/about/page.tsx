@@ -30,6 +30,14 @@ export default function Page() {
         interest but a personal mission, as I believe in leveraging technology
         responsibly for the betterment of society.
         </p>
+        <Link
+          key={'https://github.com/danielraban/'}
+          href={'https://github.com/danielraban/'}
+          rel="noopener noreferrer" target="_blank"
+          className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1"
+        >
+          check out my github
+        </Link>
         <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
         <p className="prose prose-neutral dark:prose-invert">
         🎶 Beyond the lines of code, I'm deeply entrenched in the pulsating
@@ -40,6 +48,13 @@ export default function Page() {
         Atlanta's BBQ and tacos, while also relishing the beauty of British
         landscapes.
         </p>
+        <Link
+          key={'/music'}
+          href={'/music'}
+          className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1"
+        >
+          listen to my sounds
+        </Link>
         <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
         <p className="prose prose-neutral dark:prose-invert">
         🎨 AI art is another frontier I've eagerly embraced, marveling at the
@@ -50,6 +65,13 @@ export default function Page() {
         captivated by the collaborative dance between human ingenuity and
         machine intelligence.
         </p>
+        <Link
+          key={'/artwork'}
+          href={'/artwork'}
+          className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1"
+        >
+          see my artwork
+        </Link>
         <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
         ⚽ Living in the heart of East London, I'm not only surrounded by the
         vibrant pulse of the city but also by the spirit of West Ham United
