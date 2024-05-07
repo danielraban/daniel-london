@@ -21,14 +21,14 @@ export default function Page() {
           As a Senior Software Engineer specializing in full stack development,
           I wield a diverse toolkit that includes{' '}
           <span className="not-prose">
-          <Badge href="https://spring.io/">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/spring-boot.svg"
-            />
-            Java
-          </Badge>
+            <Badge href="https://spring.io/">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/spring-boot.svg"
+              />
+              Java
+            </Badge>
           </span>
           ,{' '}
           <Badge href="https://angular.io">
@@ -70,7 +70,7 @@ export default function Page() {
             />
             Python
           </Badge>
-          , & ,{' '}
+          , &{' '}
           <Badge href="https://nodejs.org/">
             <img
               className="!mr-1"
@@ -78,8 +78,8 @@ export default function Page() {
               src="/nodejs.svg"
             />
             Node
-          </Badge>.
-          My passion for technology extends into AI, where I explore its
+          </Badge>
+          . My passion for technology extends into AI, where I explore its
           ethical implications and potential societal impacts. Beyond
           technology, I'm deeply connected to the vibrant worlds of techno and
           house music, and revel in creating AI-generated art. Living in East
