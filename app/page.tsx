@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <div>
       <section>
-        <h1 className="font-medium text-2xl mb-8 tracking-tighter">welcome</h1>
+        <h1 className="font-medium text-2xl mb-8 tracking-tighter">👋 welcome, i'm daniel!</h1>
         <p className="prose prose-neutral dark:prose-invert">
           As a Senior Software Engineer specializing in full stack development,
           I wield a diverse toolkit that includes Java, Angular, React,
