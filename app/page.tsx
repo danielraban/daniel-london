@@ -98,11 +98,11 @@ export default function Page() {
           <div>
             <img
               className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg"
+              src="/images/apoc.png"
               alt=""
             />
           </div>
-          <div>
+          {/* <div>
             <img
               className="h-auto max-w-full rounded-lg"
               src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg"
@@ -115,7 +115,7 @@ export default function Page() {
               src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg"
               alt=""
             />
-          </div>
+          </div> */}
         </div>
         <Link
           key={'/artwork'}
