@@ -1,5 +1,5 @@
+import Badge from '../components/badge';
 import React from 'react';
-
 export default function Page() {
   return (
     <>
@@ -19,8 +19,107 @@ export default function Page() {
           go-to guru for designing sleek interfaces, integrating complex
           systems, and solving integration puzzles with finesse. My toolbox is
           packed with the latest tech goodies, including HTML, CSS, JavaScript,
-          TypeScript, React, Angular, Java, Spring Boot, NGRX, RXJS, and Ruby on
-          Rails. Whether it's diving deep into database analysis or architecting
+          <span className="not-prose">
+          <Badge href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/javascript.svg"
+              />
+              JavaScript
+            </Badge>
+            <Badge href="https://spring.io/">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/spring-boot.svg"
+              />
+              Java
+            </Badge>
+          </span>
+          ,{' '}
+          <Badge href="https://angular.io">
+            <img
+              className="!mr-1"
+              style={{ width: 14, height: 14 }}
+              src="/angular.svg"
+            />
+            Angular
+          </Badge>
+          ,{' '}
+          <Badge href="https://react.dev">
+            <svg
+              width="14"
+              height="14"
+              role="img"
+              aria-label="React logo"
+              className="!mr-1"
+            >
+              <use href="/sprite.svg#react" />
+            </svg>
+            React
+          </Badge>
+          ,{' '}
+          <Badge href="https://typescriptlang.org">
+            <img
+              className="!mr-1"
+              style={{ width: 14, height: 14 }}
+              src="/ts.svg"
+            />
+            Typescript
+          </Badge>
+          ,{' '}
+          <Badge href="https://typescriptlang.org">
+            <img
+              className="!mr-1"
+              style={{ width: 14, height: 14 }}
+              src="/python.svg"
+            />
+            Python
+          </Badge>
+          ,{' '}
+          <Badge href="https://nodejs.org/">
+            <img
+              className="!mr-1"
+              style={{ width: 14, height: 14 }}
+              src="/nodejs.svg"
+            />
+            Node
+          </Badge>
+          ,{' '}
+          <Badge href="https://ngrx.io/">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/ngrx.svg"
+              />
+              NgRX
+            </Badge>,{' '}
+            
+            <Badge href="https://redux.js.org/">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/redux.svg"
+              />
+              Redux
+            </Badge>,{' '}
+            <Badge href="https://rxjs.dev/">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/rxjs.svg"
+              />
+              RxJS
+            </Badge>,{' '}
+            <Badge href="https://rubyonrails.org/">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/ruby.svg"
+              />
+              Ruby on Rails
+            </Badge>. Whether it's diving deep into database analysis or architecting
           cutting-edge solutions, I'm always up for the challenge.
         </p>
         <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
