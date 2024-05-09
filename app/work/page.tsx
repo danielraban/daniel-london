@@ -18,7 +18,7 @@ export default function Page() {
           💻 Specializing in the entire software development lifecycle, I'm your
           go-to guru for designing sleek interfaces, integrating complex
           systems, and solving integration puzzles with finesse. My toolbox is
-          packed with the latest tech goodies, including HTML, CSS, JavaScript,
+          packed with the latest tech goodies, including HTML, CSS,
           <span className="not-prose">
           <Badge href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
               <img
