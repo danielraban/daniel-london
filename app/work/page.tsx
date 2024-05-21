@@ -18,9 +18,27 @@ export default function Page() {
           💻 Specializing in the entire software development lifecycle, I'm your
           go-to guru for designing sleek interfaces, integrating complex
           systems, and solving integration puzzles with finesse. My toolbox is
-          packed with the latest tech goodies, including HTML, CSS,
+          packed with the latest tech goodies, including
           <span className="not-prose">
-          <Badge href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
+            <Badge href="https://developer.mozilla.org/en-US/docs/Web/HTML">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/html.svg"
+              />
+              HTML
+            </Badge>
+            ,{' '}
+            <Badge href="https://developer.mozilla.org/en-US/docs/Web/CSS">
+              <img
+                className="!mr-1"
+                style={{ width: 14, height: 14 }}
+                src="/css.svg"
+              />
+              CSS
+            </Badge>
+            ,{' '}
+            <Badge href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
               <img
                 className="!mr-1"
                 style={{ width: 14, height: 14 }}
@@ -28,6 +46,7 @@ export default function Page() {
               />
               JavaScript
             </Badge>
+            ,{' '}
             <Badge href="https://spring.io/">
               <img
                 className="!mr-1"
@@ -88,38 +107,41 @@ export default function Page() {
           </Badge>
           ,{' '}
           <Badge href="https://ngrx.io/">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/ngrx.svg"
-              />
-              NgRX
-            </Badge>,{' '}
-            
-            <Badge href="https://redux.js.org/">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/redux.svg"
-              />
-              Redux
-            </Badge>,{' '}
-            <Badge href="https://rxjs.dev/">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/rxjs.svg"
-              />
-              RxJS
-            </Badge>,{'&' }
-            <Badge href="https://rubyonrails.org/">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/ruby.svg"
-              />
-              Ruby on Rails
-            </Badge>. Whether it's diving deep into database analysis or architecting
+            <img
+              className="!mr-1"
+              style={{ width: 14, height: 14 }}
+              src="/ngrx.svg"
+            />
+            NgRX
+          </Badge>
+          ,{' '}
+          <Badge href="https://redux.js.org/">
+            <img
+              className="!mr-1"
+              style={{ width: 14, height: 14 }}
+              src="/redux.svg"
+            />
+            Redux
+          </Badge>
+          ,{' '}
+          <Badge href="https://rxjs.dev/">
+            <img
+              className="!mr-1"
+              style={{ width: 14, height: 14 }}
+              src="/rxjs.svg"
+            />
+            RxJS
+          </Badge>
+          {'&'}
+          <Badge href="https://rubyonrails.org/">
+            <img
+              className="!mr-1"
+              style={{ width: 14, height: 14 }}
+              src="/ruby.svg"
+            />
+            Ruby on Rails
+          </Badge>
+          . Whether it's diving deep into database analysis or architecting
           cutting-edge solutions, I'm always up for the challenge.
         </p>
         <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
