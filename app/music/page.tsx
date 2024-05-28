@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { getRecentlyPlayed } from 'app/lib/spotify';
+
 const MusicPage = () => {
   const [recentlyPlayed, setRecentlyPlayed] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -9,11 +11,7 @@ const MusicPage = () => {
   useEffect(() => {
     const fetchRecentlyPlayed = async () => {
       try {
-        const response = await fetch('/api/spotify');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
+        const data = await getRecentlyPlayed();
         setRecentlyPlayed(data.items || []);
       } catch (error) {
         console.error('Failed to fetch recently played tracks:', error);
@@ -22,7 +20,7 @@ const MusicPage = () => {
     };
 
     fetchRecentlyPlayed();
-  }, []);
+  }, []); // Empty dependency array means this effect runs once when the component mounts
 
   if (error) {
     return <div className="text-red-500 text-center mt-4">{error}</div>;
