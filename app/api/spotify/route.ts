@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { getRecentlyPlayed } from '../../lib/spotify';
 
-export const revalidate = 0;
 export async function GET(req: NextRequest) {
   console.log(req)
   try {
