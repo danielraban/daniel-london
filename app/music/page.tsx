@@ -10,7 +10,7 @@ const MusicPage = () => {
   useEffect(() => {
     const fetchRecentlyPlayed = async () => {
       try {
-        const response = await fetch('/api/spotify');
+        const response = await fetch('/api/recently_played');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
