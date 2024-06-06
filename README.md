@@ -14,7 +14,7 @@
 This application requires Node.js v18.17+.
 
 ```bash
-git clone https://github.com/leerob/daniel.london.git
+git clone https://github.com/danielraban/daniel.london.git
 cd daniel.london
 bun install
 bun run setup # Remove all of my personal information
