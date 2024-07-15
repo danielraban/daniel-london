@@ -6,6 +6,32 @@ export interface RecentlyPlayedResponse {
     limit: number;
     href: string;
   }
+
+  // Interface for the currently playing response
+export interface CurrentlyPlayingResponse {
+    context: Context;
+    timestamp: number;
+    progress_ms: number;
+    is_playing: boolean;
+    item: Track;
+    currently_playing_type: string;
+    actions: Actions;
+  }
+
+export interface Actions {
+    disallows: Disallows;
+  }
+  
+  // Interface for disallowed actions
+  export interface Disallows {
+    resuming: boolean;
+    skipping_prev: boolean;
+    skipping_next: boolean;
+    seeking: boolean;
+    pausing: boolean;
+  }
+  
+  
   
   // Interface for play history items
   export interface PlayHistory {
