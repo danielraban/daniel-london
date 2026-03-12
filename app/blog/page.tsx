@@ -6,7 +6,8 @@ import { getViewsCount } from 'app/db/queries';
 
 export const metadata = {
   title: 'Blog',
-  description: 'Read my thoughts on software development, design, fashion, music, and more',
+  description:
+    'Read my thoughts on software development, design, fashion, music, and more',
 };
 
 export default function BlogPage() {
@@ -18,28 +19,31 @@ export default function BlogPage() {
         read my blog
       </h1>
       {allBlogs
-        .sort((a, b) => {
-          if (
-            new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
-          ) {
-            return -1;
-          }
-          return 1;
-        })
+        .sort((a, b) =>
+          new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
+            ? -1
+            : 1
+        )
         .map((post) => (
           <Link
             key={post.slug}
-            className="flex flex-col space-y-1 mb-4"
+            className="group flex flex-col mb-6"
             href={`/blog/${post.slug}`}
           >
-            <div className="w-full flex flex-col">
-              <p className="text-neutral-900 dark:text-neutral-100 tracking-tight">
+            <div className="flex items-baseline justify-between gap-4">
+              <p className="text-neutral-900 dark:text-neutral-100 tracking-tight group-hover:underline underline-offset-2 decoration-neutral-400 dark:decoration-neutral-600">
                 {post.metadata.title}
               </p>
-              <Suspense fallback={<p className="h-6" />}>
-                <Views slug={post.slug} />
-              </Suspense>
+              <p className="text-neutral-500 dark:text-neutral-500 text-sm shrink-0 tabular-nums">
+                {new Date(post.metadata.publishedAt).toLocaleDateString(
+                  'en-US',
+                  { month: 'short', year: 'numeric' }
+                )}
+              </p>
             </div>
+            <Suspense fallback={<p className="text-neutral-500 text-sm h-5" />}>
+              <Views slug={post.slug} />
+            </Suspense>
           </Link>
         ))}
     </section>
@@ -48,6 +52,5 @@ export default function BlogPage() {
 
 async function Views({ slug }: { slug: string }) {
   let views = await getViewsCount();
-
   return <ViewCounter allViews={views} slug={slug} />;
 }

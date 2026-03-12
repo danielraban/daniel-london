@@ -1,17 +1,25 @@
 'use client';
 
+import React from 'react';
 import { useFormStatus } from 'react-dom';
 import { useState, useEffect } from 'react';
 import { deleteGuestbookEntries } from 'app/db/actions';
 
-export default function Form({ entries }) {
+type GuestbookEntry = {
+  id: string;
+  body: string;
+  created_by: string;
+  updated_at: string;
+};
+
+export default function Form({ entries }: { entries: GuestbookEntry[] }) {
   const [selectedInputs, setSelectedInputs] = useState<string[]>([]);
   const [startShiftClickIndex, setStartShiftClickIndex] = useState<number>(0);
   const [isShiftKeyPressed, setIsShiftKeyPressed] = useState(false);
   const [isCommandKeyPressed, setIsCommandKeyPressed] = useState(false);
 
   useEffect(() => {
-    const keyDownHandler = ({ key }) => {
+    const keyDownHandler = ({ key }: KeyboardEvent) => {
       if (key === 'Shift') {
         setIsShiftKeyPressed(true);
       }
@@ -19,7 +27,7 @@ export default function Form({ entries }) {
         setIsCommandKeyPressed(true);
       }
     };
-    const keyUpHandler = ({ key }) => {
+    const keyUpHandler = ({ key }: KeyboardEvent) => {
       if (key === 'Shift') {
         setIsShiftKeyPressed(false);
       }
@@ -61,7 +69,7 @@ export default function Form({ entries }) {
     setSelectedInputs((prevInputs) => {
       const newSelection = entries
         .slice(startIndex, endIndex + 1)
-        .map((item) => item.id);
+        .map((item: GuestbookEntry) => item.id);
 
       if (checked) {
         const combinedSelection = Array.from(
@@ -122,7 +130,7 @@ export default function Form({ entries }) {
   );
 }
 
-function GuestbookEntry({ entry, children }) {
+function GuestbookEntry({ entry, children }: { entry: GuestbookEntry; children: React.ReactNode }) {
   return (
     <div className="flex flex-col space-y-1 mb-4">
       <div className="w-full text-sm break-words items-center flex">
@@ -136,18 +144,16 @@ function GuestbookEntry({ entry, children }) {
   );
 }
 
-const cx = (...classes) => classes.filter(Boolean).join(' ');
+const cx = (...classes: (string | false | null | undefined)[]) => classes.filter(Boolean).join(' ');
 
-function DeleteButton({ isActive }) {
+function DeleteButton({ isActive }: { isActive: boolean }) {
   const { pending } = useFormStatus();
 
   return (
     <button
       className={cx(
         'px-3 py-2 border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded p-1 text-sm inline-flex items-center leading-4 text-neutral-900 dark:text-neutral-100 mb-8 transition-all',
-        {
-          'bg-red-300/50 dark:bg-red-700/50': isActive,
-        }
+        isActive && 'bg-red-300/50 dark:bg-red-700/50'
       )}
       disabled={pending}
       type="submit"
