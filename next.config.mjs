@@ -1,19 +1,24 @@
 import postgres from 'postgres';
+import createMDX from '@next/mdx';
+import remarkFrontmatter from 'remark-frontmatter';
 
 export const sql = postgres(process.env.POSTGRES_URL, {
   ssl: 'allow',
 });
 
-const nextConfig = {
-  experimental: {
-    ppr: true,
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkFrontmatter],
+    rehypePlugins: [],
   },
+});
+
+const nextConfig = {
   logging: {
     fetches: {
       fullUrl: true,
     },
   },
-  transpilePackages: ['next-mdx-remote'],
   async redirects() {
     if (!process.env.POSTGRES_URL) {
       return [];
@@ -82,4 +87,4 @@ const securityHeaders = [
   },
 ];
 
-export default nextConfig;
+export default withMDX(nextConfig);

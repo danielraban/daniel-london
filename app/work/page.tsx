@@ -1,290 +1,176 @@
 import Badge from '../components/badge';
 import React from 'react';
+
+const jobs = [
+  {
+    role: 'Senior Software Engineer',
+    company: 'Builder.ai',
+    location: 'London',
+    period: 'Oct 2023 — Mar 2024',
+    bullets: [
+      'Developed features and components in Angular, React, TypeScript, and Ruby on Rails.',
+      'Increased UI code coverage using Jest.',
+      'Implemented best practices for RxJS and component interaction.',
+      'Contributed to code reviews and pair programming.',
+      'Provided technical solutions to product and architected fullstack solutions with engineers.',
+      'Led team meetings and ran demos to product stakeholders.',
+    ],
+  },
+  {
+    role: 'Senior Software Engineer',
+    company: 'The Home Depot',
+    location: 'Atlanta',
+    period: 'Jul 2021 — Aug 2023',
+    bullets: [
+      'Senior Fullstack Engineer on the OrderUp! team, responsible for retiring legacy systems and porting features to modern UI and microservice architecture.',
+      'Designed and developed web applications for Major Appliances, Protection Plans, and Parts & Services, transacting billions in revenue with NX, Angular, TypeScript, NGRX, RxJS, Spring Boot, Cypress, GCP, and Jenkins.',
+      'Maintained 95% UI code coverage and 90% microservice coverage.',
+      'Delivered revenue-generating features to production.',
+      'Debugged and hot-fixed critical issues to prevent loss of sales.',
+    ],
+  },
+  {
+    role: 'Lead Software Engineer',
+    company: 'Hathway',
+    location: 'Atlanta',
+    period: 'Oct 2020 — Jul 2021',
+    bullets: [
+      'Led multiple teams building Angular and native food ordering apps using TypeScript, NGRX, RxJS, Jasmine, Karma, AWS, Node.js, Cordova, and Capacitor.',
+      'Introduced TDD, CI/CD, agile best practices, code review, and story pointing.',
+      'Enabled engineers to break down features into self-managed user stories.',
+      'Notable apps: PandaExpress, Raising Cane\'s, Hardee\'s, and Carl\'s Jr.',
+    ],
+  },
+  {
+    role: 'Senior Software Engineer I',
+    company: 'CallRail',
+    location: 'Atlanta',
+    period: 'Aug 2018 — Oct 2020',
+    bullets: [
+      'Developed a new product from scratch over one year generating annual recurring revenue, on a team of three engineers.',
+      'Coded daily in Ruby on Rails, RSpec, Angular 5–9, TypeScript, Elasticsearch, Docker, and GitHub.',
+      'Built reporting algorithms, API design for clients, and third-party integrations.',
+    ],
+  },
+];
+
 export default function Page() {
   return (
     <>
-      <section className="mb-4">
+      <section className="mb-8">
         <h1 className="font-medium text-2xl mb-4 tracking-tighter">work</h1>
         <p className="prose prose-neutral dark:prose-invert">
-          🚀 Hey there! I'm a dynamic and results-driven Fullstack Software
-          Engineer with a knack for thinking outside the box. My passion lies in
-          crafting customer-focused solutions that make a real impact. From
-          brainstorming innovative ideas to bringing them to life through
-          design, development, and implementation, I thrive in the fast-paced
-          world of software development.
+          Dynamic and results-driven Fullstack Software Engineer with a passion
+          for crafting customer-focused solutions. I specialise in the full
+          software development lifecycle — from sleek interface design to
+          complex system integration.
         </p>
-        <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
+        <hr className="my-6 border-neutral-200 dark:border-neutral-700" />
         <p className="prose prose-neutral dark:prose-invert">
-          💻 Specializing in the entire software development lifecycle, I'm your
-          go-to guru for designing sleek interfaces, integrating complex
-          systems, and solving integration puzzles with finesse. My toolbox is
-          packed with the latest tech goodies, including
+          Specialising in{' '}
           <span className="not-prose">
             <Badge href="https://developer.mozilla.org/en-US/docs/Web/HTML">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/html.svg"
-              />
+              <img className="!mr-1" style={{ width: 14, height: 14 }} src="/html.svg" />
               HTML
-            </Badge>
-            ,{' '}
-            <Badge href="https://developer.mozilla.org/en-US/docs/Web/CSS">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/css.svg"
-              />
-              CSS
-            </Badge>
-            ,{' '}
-            <Badge href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/javascript.svg"
-              />
-              JavaScript
-            </Badge>
-            ,{' '}
-            <Badge href="https://spring.io/">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/spring-boot.svg"
-              />
-              Java
             </Badge>
           </span>
           ,{' '}
+          <Badge href="https://developer.mozilla.org/en-US/docs/Web/CSS">
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/css.svg" />
+            CSS
+          </Badge>
+          ,{' '}
+          <Badge href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/javascript.svg" />
+            JavaScript
+          </Badge>
+          ,{' '}
+          <Badge href="https://spring.io/">
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/spring-boot.svg" />
+            Java
+          </Badge>
+          ,{' '}
           <Badge href="https://angular.io">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/angular.svg"
-            />
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/angular.svg" />
             Angular
           </Badge>
           ,{' '}
           <Badge href="https://react.dev">
-            <svg
-              width="14"
-              height="14"
-              role="img"
-              aria-label="React logo"
-              className="!mr-1"
-            >
+            <svg width="14" height="14" role="img" aria-label="React logo" className="!mr-1">
               <use href="/sprite.svg#react" />
             </svg>
             React
           </Badge>
           ,{' '}
           <Badge href="https://typescriptlang.org">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/ts.svg"
-            />
-            Typescript
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/ts.svg" />
+            TypeScript
           </Badge>
           ,{' '}
-          <Badge href="https://typescriptlang.org">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/python.svg"
-            />
+          <Badge href="https://python.org">
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/python.svg" />
             Python
           </Badge>
           ,{' '}
           <Badge href="https://nodejs.org/">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/nodejs.svg"
-            />
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/nodejs.svg" />
             Node
           </Badge>
           ,{' '}
           <Badge href="https://ngrx.io/">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/ngrx.svg"
-            />
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/ngrx.svg" />
             NgRX
           </Badge>
           ,{' '}
           <Badge href="https://redux.js.org/">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/redux.svg"
-            />
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/redux.svg" />
             Redux
           </Badge>
           ,{' '}
           <Badge href="https://rxjs.dev/">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/rxjs.svg"
-            />
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/rxjs.svg" />
             RxJS
           </Badge>
-          {'&'}
+          {' & '}
           <Badge href="https://rubyonrails.org/">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/ruby.svg"
-            />
+            <img className="!mr-1" style={{ width: 14, height: 14 }} src="/ruby.svg" />
             Ruby on Rails
           </Badge>
-          . Whether it's diving deep into database analysis or architecting
-          cutting-edge solutions, I'm always up for the challenge.
-        </p>
-        <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
-        <p className="prose prose-neutral dark:prose-invert">
-          📝 Beyond just coding, I excel in translating ideas into actionable
-          plans, crafting meticulous documentation, and conducting thorough
-          architectural research. With top-notch communication skills, I'm
-          equally comfortable presenting my ideas in boardrooms or collaborating
-          with teammates in brainstorming sessions. Whether flying solo on
-          independent projects or leading the charge as a mentor, I thrive in
-          environments where creativity and collaboration intersect.
+          .
         </p>
       </section>
-      <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
+      <hr className="my-6 border-neutral-200 dark:border-neutral-700" />
       <section>
-        <h1 className="font-medium text-2xl mb-4 tracking-tighter">
-          recent experience
+        <h1 className="font-medium text-2xl mb-6 tracking-tighter">
+          experience
         </h1>
-        <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
-        <div className="prose prose-neutral dark:prose-invert">
-          <h2 className="font-medium text-lg mb-1 tracking-tighter">
-            Senior Software Engineer at Builder.ai
-          </h2>
-          <h3 className="font-small text-lg mb-1 tracking-tighter">London</h3>
-          <h3 className="font-small text-sm mb-1 tracking-tighter">
-            October 2023 — March 2024
-          </h3>
-          <ul className="list-disc">
-            <li>
-              As a senior software engineer at Builder.ai I was responsible
-              developing features and components in Angular, React, Typescript
-              and Ruby on Rails.
-            </li>
-            <li>Increased code coverage across the UI using Jest</li>
-            <li>
-              Implemented best practices for RxJS and component interaction
-            </li>
-            <li>Contributed to code reviews</li>
-            <li>
-              Provided technical solutions to product and architected fullstack
-              solutions with engineers
-            </li>
-            <li>Pair programming</li>
-            <li>
-              Lead team meetings with engineers and ran demos to product
-              stakeholders
-            </li>
-          </ul>
-        </div>
-        <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
-        <div className="prose prose-neutral dark:prose-invert">
-          <h2 className="font-medium text-lg mb-1 tracking-tighter">
-            Senior Software Engineer at The Home Depot
-          </h2>
-          <h3 className="font-small text-lg mb-1 tracking-tighter">Atlanta</h3>
-          <h3 className="font-small text-sm mb-1 tracking-tighter">
-            July 2021 — August 2023
-          </h3>
-          <ul className="list-disc">
-            <li>
-              Senior Fullstack Engineer on the OrderUp! team. I was responsible
-              for the retirement of legacy systems and porting over all their
-              features into modern UI’s, and microservice architecture while
-              maintaining backward compatibilit
-            </li>
-            <li>
-              Designed, architected, and developed web applications, integrating
-              the sales of Major Appliances, Protection Plans, and Parts and
-              Services transacting billions of dollars in revenue with modern
-              technologies such as NX, Angular, Typescript, NGRX, RXJS,
-              Springboot, Cypress, GCP, and Jenkins.
-            </li>
-            <li>
-              Wrote testable code that maintained 95% code coverage throughout
-              the UI code base and 90% code coverage in micro-services
-            </li>
-            <li>Increased revenue based on features deployed to production.</li>
-            <li>
-              Debugged and hot-fixed code when necessary, saving loss of sales
-              throughout iterations.
-            </li>
-            <li>
-              Pair programmed to ensure engineers were able complete features.
-            </li>
-          </ul>
-        </div>
-        <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
-        <div className="prose prose-neutral dark:prose-invert">
-          <h2 className="font-medium text-lg mb-1 tracking-tighter">
-            Lead Software Engineer at Hathway
-          </h2>
-          <h3 className="font-small text-lg mb-1 tracking-tighter">Atlanta</h3>
-          <h3 className="font-small text-sm mb-1 tracking-tighter">
-            October 2020 — July 2021
-          </h3>
-          <ul className="list-disc">
-            <li>
-              Lead multiple teams for angular and native applications focused in
-              the food ordering space utilizing Typescript, Angular, NGRX, RXJS,
-              Jasmine, Karma, AWS, NodeJS, Cordova, and Capacitor.
-            </li>
-            <li>
-              During my time here I implemented TDD, CICD, agile best practices,
-              code review, and story pointing.
-            </li>
-            <li>
-              I enabled the engineers to breakdown features into workable user
-              stories, which eventually enabled them to become self managed.
-            </li>
-            <li>
-              Some App Store highlights include: PandaExpress, RaisingCanes,
-              Hardee’s and Carl’s Jr.
-            </li>
-            <li>
-              Pair programmed to ensure engineers were able complete features.
-            </li>
-          </ul>
-        </div>
-        <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
-        <div className="prose prose-neutral dark:prose-invert">
-          <h2 className="font-medium text-lg mb-1 tracking-tighter">
-            Senior Software Engineer I as CallRail
-          </h2>
-          <h3 className="font-small text-lg mb-1 tracking-tighter">Atlanta</h3>
-          <h3 className="font-small text-sm mb-1 tracking-tighter">
-            August 2018 — October 2020
-          </h3>
-          <ul className="list-disc">
-            <li>
-              Develop and code a new product over the course of one year which
-              generated annual recurring revenue, on a team of 3 engineers.
-            </li>
-            <li>
-              During my time at CallRail I was a Senior Engineer,coding daily in
-              Ruby on Rails, RSPEC, Angular 5-9, TypeScript, ElasticSearch,
-              Docker, CSS, HTML5, TDD, and GitHub.
-            </li>
-            <li>
-              Supported the core application; developing reporting algorithms
-              for our users, API design for clients to leverage, and third party
-              integrations.
-            </li>
-          </ul>
+        <div className="space-y-10">
+          {jobs.map((job, i) => (
+            <div key={i}>
+              <div className="mb-3">
+                <h2 className="font-medium text-neutral-900 dark:text-neutral-100 tracking-tight">
+                  {job.role}{' '}
+                  <span className="text-neutral-500 dark:text-neutral-400 font-normal">
+                    at {job.company}
+                  </span>
+                </h2>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-0.5">
+                  {job.location} · {job.period}
+                </p>
+              </div>
+              <ul className="space-y-1.5 text-sm text-neutral-700 dark:text-neutral-300">
+                {job.bullets.map((bullet, j) => (
+                  <li key={j} className="flex gap-2">
+                    <span className="text-neutral-300 dark:text-neutral-600 mt-0.5 select-none">–</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+              {i < jobs.length - 1 && (
+                <hr className="mt-8 border-neutral-200 dark:border-neutral-700" />
+              )}
+            </div>
+          ))}
         </div>
       </section>
     </>

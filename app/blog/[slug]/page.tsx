@@ -1,18 +1,23 @@
 import { Suspense, cache } from 'react';
-
-import { CustomMDX } from 'app/components/mdx';
 import type { Metadata } from 'next';
+import type { ComponentType } from 'react';
 import ViewCounter from '../view-counter';
 import { getBlogPosts } from 'app/db/blog';
 import { getViewsCount } from 'app/db/queries';
 import { increment } from 'app/db/actions';
-import { unstable_noStore as noStore } from 'next/cache';
 import { notFound } from 'next/navigation';
+
+export async function generateStaticParams() {
+  return getBlogPosts().map((post) => ({ slug: post.slug }));
+}
 
 export async function generateMetadata({
   params,
+}: {
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
-  let post = getBlogPosts().find((post) => post.slug === params.slug);
+  const { slug } = await params;
+  let post = getBlogPosts().find((post) => post.slug === slug);
   if (!post) {
     return;
   }
@@ -52,7 +57,6 @@ export async function generateMetadata({
 }
 
 function formatDate(date: string) {
-  noStore();
   let currentDate = new Date().getTime();
   if (!date.includes('T')) {
     date = `${date}T00:00:00`;
@@ -60,7 +64,7 @@ function formatDate(date: string) {
   let targetDate = new Date(date).getTime();
   let timeDifference = Math.abs(currentDate - targetDate);
   let daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
+
   let fullDate = new Date(date).toLocaleString('en-us', {
     month: 'long',
     day: 'numeric',
@@ -72,23 +76,32 @@ function formatDate(date: string) {
   } else if (daysAgo < 7) {
     return `${fullDate} (${daysAgo}d ago)`;
   } else if (daysAgo < 30) {
-    const weeksAgo = Math.floor(daysAgo / 7)
+    const weeksAgo = Math.floor(daysAgo / 7);
     return `${fullDate} (${weeksAgo}w ago)`;
   } else if (daysAgo < 365) {
-    const monthsAgo = Math.floor(daysAgo / 30)
+    const monthsAgo = Math.floor(daysAgo / 30);
     return `${fullDate} (${monthsAgo}mo ago)`;
   } else {
-    const yearsAgo = Math.floor(daysAgo / 365)
+    const yearsAgo = Math.floor(daysAgo / 365);
     return `${fullDate} (${yearsAgo}y ago)`;
   }
 }
 
-export default function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug);
+export default async function Blog({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  let post = getBlogPosts().find((post) => post.slug === slug);
 
   if (!post) {
     notFound();
   }
+
+  const { default: Post } = (await import(
+    `../../../content/${slug}.mdx`
+  )) as { default: ComponentType };
 
   return (
     <section>
@@ -128,7 +141,7 @@ export default function Blog({ params }) {
         </Suspense>
       </div>
       <article className="prose prose-quoteless prose-neutral dark:prose-invert">
-        <CustomMDX source={post.content} />
+        <Post />
       </article>
     </section>
   );

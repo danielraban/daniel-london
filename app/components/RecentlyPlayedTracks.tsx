@@ -1,55 +1,31 @@
-'use client';
+import { getRecentlyPlayed } from '../lib/spotify';
 
-import { PlayHistory, RecentlyPlayedResponse } from '../lib/spotify.model';
-import { useEffect, useState } from 'react';
-
-const RecentlyPlayedTracks = () => {
-  const [recentlyPlayed, setRecentlyPlayed] = useState<PlayHistory[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchRecentlyPlayed = async () => {
-      try {
-        const response = await fetch('/api/recently_played');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data: RecentlyPlayedResponse = await response.json();
-        setRecentlyPlayed(data.items || []);
-      } catch (error) {
-        console.error('Failed to fetch recently played tracks:', error);
-        setError('Failed to fetch recently played tracks');
-      }
-    };
-
-    fetchRecentlyPlayed();
-  }, []);
-
-  if (error) {
-    return <div className="text-red-500 text-center mt-4">{error}</div>;
-  }
-
-  if (!recentlyPlayed) {
-    return <div className="text-center mt-4">Loading...</div>;
-  }
+const RecentlyPlayedTracks = async () => {
+  const recentlyPlayed = await getRecentlyPlayed();
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mb-8">Recently Played Tracks</h1>
-      <ul className="space-y-4">
-        {recentlyPlayed.map((item) => (
-          <li key={item.track.id} className="bg-white p-4 rounded-lg shadow-md flex items-center space-x-4">
+      <h2 className="text-xl font-medium tracking-tighter mb-4">
+        Recently Played
+      </h2>
+      <ul className="space-y-2">
+        {recentlyPlayed.items.map((item) => (
+          <li
+            key={item.track.id}
+            className="bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 p-3 rounded-lg flex items-center space-x-3"
+          >
             <img
               src={item.track.album.images[0]?.url}
               alt={item.track.name}
-              className="w-16 h-16 rounded-lg"
+              className="w-10 h-10 rounded-md flex-shrink-0"
             />
-            <div>
-              <p className="text-gray-500 text-lg font-semibold">{item.track.name}</p>
-              <p className="text-gray-500">
+            <div className="min-w-0">
+              <p className="text-neutral-900 dark:text-neutral-100 font-medium text-sm truncate">
+                {item.track.name}
+              </p>
+              <p className="text-neutral-600 dark:text-neutral-400 text-sm truncate">
                 {item.track.artists.map((artist) => artist.name).join(', ')}
               </p>
-              <p className="text-gray-500 text-sm">{item.track.album.name}</p>
             </div>
           </li>
         ))}

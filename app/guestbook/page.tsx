@@ -43,14 +43,26 @@ async function GuestbookEntries() {
     return null;
   }
 
-  return entries.map((entry) => (
-    <div key={entry.id} className="flex flex-col space-y-1 mb-4">
-      <div className="w-full text-sm break-words">
-        <span className="text-neutral-600 dark:text-neutral-400 mr-1">
-          {entry.created_by}:
-        </span>
-        {entry.body}
-      </div>
+  return (
+    <div className="mt-6 space-y-4">
+      {entries.map((entry) => (
+        <div key={entry.id} className="flex flex-col space-y-1">
+          <div className="flex items-baseline gap-2">
+            <span className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+              {entry.created_by}
+            </span>
+            <span className="text-xs text-neutral-400 dark:text-neutral-600 tabular-nums">
+              {new Date(entry.updated_at as string).toLocaleDateString(
+                'en-US',
+                { month: 'short', day: 'numeric', year: 'numeric' }
+              )}
+            </span>
+          </div>
+          <p className="text-sm text-neutral-700 dark:text-neutral-300 break-words">
+            {entry.body}
+          </p>
+        </div>
+      ))}
     </div>
-  ));
+  );
 }

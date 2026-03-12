@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+
 interface InstagramPost {
   id: string;
   caption: string;
@@ -34,20 +35,54 @@ export default function ArtPage() {
     fetchData();
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (posts.length === 0) return <p>No data fetched</p>;
+  if (isLoading) {
+    return (
+      <section>
+        <h1 className="font-medium text-2xl mb-8 tracking-tighter">artwork</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div
+              key={i}
+              className="aspect-square bg-neutral-100 dark:bg-neutral-800 rounded-lg animate-pulse"
+            />
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section>
+        <h1 className="font-medium text-2xl mb-8 tracking-tighter">artwork</h1>
+        <p className="text-neutral-500 dark:text-neutral-400 text-sm">
+          Couldn't load artwork right now.
+        </p>
+      </section>
+    );
+  }
+
+  if (posts.length === 0) {
+    return (
+      <section>
+        <h1 className="font-medium text-2xl mb-8 tracking-tighter">artwork</h1>
+        <p className="text-neutral-500 dark:text-neutral-400 text-sm">
+          No posts yet.
+        </p>
+      </section>
+    );
+  }
 
   return (
     <section>
-      <h1 className="font-medium text-2xl mb-8 tracking-tighter">Artwork</h1>
-      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
-        {posts.map(post => (
-          <div key={post.id}>
+      <h1 className="font-medium text-2xl mb-8 tracking-tighter">artwork</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {posts.map((post) => (
+          <div key={post.id} className="group overflow-hidden rounded-lg">
             <img
               src={post.media_url}
-              className="h-auto max-w-full rounded-lg"
-              alt={`Post caption: ${post.caption || 'Instagram post'}`}
+              className="h-auto w-full rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+              alt={post.caption || 'Artwork'}
             />
           </div>
         ))}

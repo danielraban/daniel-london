@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import { TweetComponent } from './tweet';
 import { highlight } from 'sugar-high';
 import React from 'react';
 import { LiveCode } from './sandpack';
 
-function Table({ data }) {
+export function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
   let headers = data.headers.map((header, index) => (
     <th key={index}>{header}</th>
   ));
@@ -28,38 +26,36 @@ function Table({ data }) {
   );
 }
 
-function CustomLink(props) {
-  let href = props.href;
-
+export function CustomLink({ href, children, ...rest }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) {
   if (href.startsWith('/')) {
     return (
-      <Link href={href} {...props}>
-        {props.children}
+      <Link href={href} {...rest}>
+        {children}
       </Link>
     );
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} />;
+    return <a href={href} {...rest}>{children}</a>;
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />;
+  return <a href={href} target="_blank" rel="noopener noreferrer" {...rest}>{children}</a>;
 }
 
-function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+export function RoundedImage({ alt = '', ...rest }: React.ComponentProps<typeof Image>) {
+  return <Image alt={alt} className="rounded-lg" {...rest} />;
 }
 
-function Callout(props) {
+export function Callout({ emoji, children }: { emoji?: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="px-4 py-3 border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 rounded p-1 text-sm flex items-center text-neutral-900 dark:text-neutral-100 mb-8">
-      <div className="flex items-center w-4 mr-4">{props.emoji}</div>
-      <div className="w-full callout">{props.children}</div>
+      <div className="flex items-center w-4 mr-4">{emoji}</div>
+      <div className="w-full callout">{children}</div>
     </div>
   );
 }
 
-function ProsCard({ title, pros }) {
+export function ProsCard({ title, pros }: { title: string; pros: string[] }) {
   return (
     <div className="border border-emerald-200 dark:border-emerald-900 bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-4 w-full">
       <span>{`You might use ${title} if...`}</span>
@@ -88,7 +84,7 @@ function ProsCard({ title, pros }) {
   );
 }
 
-function ConsCard({ title, cons }) {
+export function ConsCard({ title, cons }: { title: string; cons: string[] }) {
   return (
     <div className="border border-red-200 dark:border-red-900 bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-6 w-full">
       <span>{`You might not use ${title} if...`}</span>
@@ -113,25 +109,25 @@ function ConsCard({ title, cons }) {
   );
 }
 
-function Code({ children, ...props }) {
-  let codeHTML = highlight(children);
+export function Code({ children, ...props }: React.HTMLAttributes<HTMLElement> & { children?: string }) {
+  let codeHTML = highlight(children ?? '');
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 }
 
-function slugify(str) {
+export function slugify(str: string) {
   return str
     .toString()
     .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters except for -
-    .replace(/\-\-+/g, '-'); // Replace multiple - with single -
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/&/g, '-and-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
 }
 
-function createHeading(level) {
-  return ({ children }) => {
-    let slug = slugify(children);
+export function createHeading(level: number) {
+  return ({ children }: { children?: React.ReactNode }) => {
+    let slug = slugify(String(children));
     return React.createElement(
       `h${level}`,
       { id: slug },
@@ -147,29 +143,4 @@ function createHeading(level) {
   };
 }
 
-let components = {
-  h1: createHeading(1),
-  h2: createHeading(2),
-  h3: createHeading(3),
-  h4: createHeading(4),
-  h5: createHeading(5),
-  h6: createHeading(6),
-  Image: RoundedImage,
-  a: CustomLink,
-  Callout,
-  ProsCard,
-  ConsCard,
-  StaticTweet: TweetComponent,
-  code: Code,
-  Table,
-  LiveCode,
-};
-
-export function CustomMDX(props) {
-  return (
-    <MDXRemote
-      {...props}
-      components={{ ...components, ...(props.components || {}) }}
-    />
-  );
-}
+export { LiveCode };

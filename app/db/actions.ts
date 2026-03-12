@@ -3,10 +3,11 @@
 import { auth } from 'app/auth';
 import { type Session } from 'next-auth';
 import { sql } from './postgres';
-import { revalidatePath, unstable_noStore as noStore } from 'next/cache';
+import { revalidatePath } from 'next/cache';
+import { env } from 'app/env';
+import { z } from 'zod';
 
 export async function increment(slug: string) {
-  noStore();
   await sql`
     INSERT INTO views (slug, count)
     VALUES (${slug}, 1)
@@ -43,33 +44,34 @@ export async function saveGuestbookEntry(formData: FormData) {
 
   revalidatePath('/guestbook');
 
-  let data = await fetch('https://api.resend.com/emails', {
+  await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${process.env.RESEND_SECRET}`,
+      Authorization: `Bearer ${env.RESEND_SECRET}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       from: 'guestbook@daniel.london',
-      to: 'me@daniel.london',
+      to: env.OWNER_EMAIL,
       subject: 'New Guestbook Entry',
       html: `<p>Email: ${email}</p><p>Message: ${body}</p>`,
     }),
   });
-
-  let response = await data.json();
-  console.log('Email sent', response);
 }
 
 export async function deleteGuestbookEntries(selectedEntries: string[]) {
   let session = await getSession();
   let email = session.user?.email as string;
 
-  if (email !== 'me@daniel.london') {
+  if (email !== env.OWNER_EMAIL) {
     throw new Error('Unauthorized');
   }
 
-  let selectedEntriesAsNumbers = selectedEntries.map(Number);
+  let selectedEntriesAsNumbers = selectedEntries
+    .map((id) => z.coerce.number().int().safeParse(id))
+    .filter((r): r is { success: true; data: number } => r.success)
+    .map((r) => r.data);
+
   let arrayLiteral = `{${selectedEntriesAsNumbers.join(',')}}`;
 
   await sql`

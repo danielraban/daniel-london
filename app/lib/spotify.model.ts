@@ -53,8 +53,8 @@ export interface Actions {
     href: string;
     id: string;
     is_playable: boolean;
-    linked_from: any; // Can be more detailed if needed
-    restrictions: any; // Can be more detailed if needed
+    linked_from: unknown;
+    restrictions: unknown;
     name: string;
     popularity: number;
     preview_url: string;

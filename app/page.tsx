@@ -1,12 +1,13 @@
 import Badge from './components/badge';
 import Link from 'next/link';
 import React from 'react';
+
 export default function Page() {
   return (
     <div>
       <section>
         <h1 className="font-medium text-2xl mb-8 tracking-tighter">
-          👋 welcome, i'm daniel!
+          welcome, i&apos;m daniel!
         </h1>
         <p className="prose prose-neutral dark:prose-invert">
           As a Senior Software Engineer specializing in full stack development,
@@ -72,57 +73,44 @@ export default function Page() {
           </Badge>
           . My passion for technology extends into AI, where I explore its
           ethical implications and potential societal impacts. Beyond
-          technology, I'm deeply connected to the vibrant worlds of techno and
-          house music, and revel in creating AI-generated art. Living in East
-          London, I embrace every experience with honesty and tenacity, always
-          ready to learn from life's challenges and explore new cultures.
+          technology, I&apos;m deeply connected to the vibrant worlds of techno
+          and house music, and revel in creating AI-generated art. Living in
+          East London, I embrace every experience with honesty and tenacity,
+          always ready to learn from life&apos;s challenges and explore new
+          cultures.
         </p>
         <Link
-          key={'/about'}
-          href={'/about'}
-          className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1"
+          href="/about"
+          className="mt-3 inline-flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
         >
           read my full bio
+          <span aria-hidden>→</span>
         </Link>
       </section>
-      <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
+      <hr className="my-8 border-neutral-200 dark:border-neutral-700" />
       <section>
-        <div className="grid grid-cols-2 gap-2">
-          <div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="overflow-hidden rounded-lg">
             <img
-              className="h-auto max-w-full rounded-lg"
+              className="h-auto w-full rounded-lg transition-transform duration-300 hover:scale-[1.02]"
               src="/images/aod.png"
-              alt=""
+              alt="Artwork"
             />
           </div>
-          <div>
+          <div className="overflow-hidden rounded-lg">
             <img
-              className="h-auto max-w-full rounded-lg"
+              className="h-auto w-full rounded-lg transition-transform duration-300 hover:scale-[1.02]"
               src="/images/apoc.png"
-              alt=""
+              alt="Artwork"
             />
           </div>
-          {/* <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg"
-              alt=""
-            />
-          </div> */}
         </div>
         <Link
-          key={'/artwork'}
-          href={'/artwork'}
-          className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1"
+          href="/artwork"
+          className="mt-3 inline-flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
         >
           see more of my artwork
+          <span aria-hidden>→</span>
         </Link>
       </section>
     </div>
