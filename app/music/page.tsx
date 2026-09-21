@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NowPlayingCard, RecentlyPlayedList } from "../components/spotify-hud";
-import { getNowPlaying, getRecentlyPlayed } from "@/lib/spotify";
+import { getSpotifySnapshot } from "@/lib/spotify";
 import { profile } from "@/lib/content/profile";
 
 export const metadata: Metadata = {
@@ -11,10 +11,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function MusicPage() {
-  const [nowPlaying, recentlyPlayed] = await Promise.all([
-    getNowPlaying(),
-    getRecentlyPlayed(),
-  ]);
+  const { status, nowPlaying, recentlyPlayed } = await getSpotifySnapshot();
 
   return (
     <div className="space-y-6">
@@ -22,8 +19,8 @@ export default async function MusicPage() {
       <p className="text-muted">
         Techno, house, and whatever else is in the deck. Live from Spotify.
       </p>
-      <NowPlayingCard track={nowPlaying} />
-      <RecentlyPlayedList tracks={recentlyPlayed} />
+      <NowPlayingCard track={nowPlaying} status={status} />
+      <RecentlyPlayedList tracks={recentlyPlayed} status={status} />
     </div>
   );
 }

@@ -14,6 +14,14 @@ export type NowPlaying = SpotifyTrack & {
   isPlaying: boolean;
 };
 
+export type SpotifyAuthStatus = "ok" | "missing_env" | "revoked" | "error";
+
+export type SpotifySnapshot = {
+  status: SpotifyAuthStatus;
+  nowPlaying: NowPlaying | null;
+  recentlyPlayed: SpotifyTrack[];
+};
+
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 const NOW_PLAYING_ENDPOINT =
   "https://api.spotify.com/v1/me/player/currently-playing";
@@ -23,11 +31,11 @@ const RECENTLY_PLAYED_ENDPOINT =
 type SpotifyImage = { url: string };
 type SpotifyArtist = { name: string };
 type SpotifyTrackPayload = {
-  id: string;
-  name: string;
-  artists: SpotifyArtist[];
-  album: { name: string; images: SpotifyImage[] };
-  external_urls: { spotify: string };
+  id?: string;
+  name?: string;
+  artists?: SpotifyArtist[];
+  album?: { name?: string; images?: SpotifyImage[] };
+  external_urls?: { spotify?: string };
 };
 
 function isConfigured() {
@@ -38,58 +46,74 @@ function isConfigured() {
   );
 }
 
-const getAccessToken = cache(async () => {
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-  const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+const getAccessToken = cache(
+  async (): Promise<{ token: string | null; status: SpotifyAuthStatus }> => {
+    const clientId = process.env.SPOTIFY_CLIENT_ID;
+    const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+    const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 
-  if (!clientId || !clientSecret || !refreshToken) {
+    if (!clientId || !clientSecret || !refreshToken) {
+      return { token: null, status: "missing_env" };
+    }
+
+    const response = await fetch(TOKEN_ENDPOINT, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: refreshToken,
+      }),
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      const payload = (await response.json().catch(() => null)) as {
+        error?: string;
+        error_description?: string;
+      } | null;
+      console.error("Spotify token refresh failed", {
+        status: response.status,
+        error: payload?.error,
+      });
+      return {
+        token: null,
+        status: payload?.error === "invalid_grant" ? "revoked" : "error",
+      };
+    }
+
+    const data = (await response.json()) as { access_token?: string };
+    if (!data.access_token) {
+      return { token: null, status: "error" };
+    }
+
+    return { token: data.access_token, status: "ok" };
+  },
+);
+
+function mapTrack(
+  track: SpotifyTrackPayload | null | undefined,
+  playedAt?: string,
+): SpotifyTrack | null {
+  if (!track?.id || !track.name) {
     return null;
   }
 
-  const response = await fetch(TOKEN_ENDPOINT, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      grant_type: "refresh_token",
-      refresh_token: refreshToken,
-    }),
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    return null;
-  }
-
-  const data = (await response.json()) as { access_token?: string };
-  return data.access_token ?? null;
-});
-
-function mapTrack(track: SpotifyTrackPayload, playedAt?: string): SpotifyTrack {
   return {
     id: track.id,
     name: track.name,
-    artists: track.artists.map((artist) => artist.name).join(", "),
-    album: track.album.name,
-    albumImage: track.album.images[1]?.url ?? track.album.images[0]?.url ?? null,
-    url: track.external_urls.spotify,
+    artists: (track.artists ?? []).map((artist) => artist.name).join(", "),
+    album: track.album?.name ?? "",
+    albumImage:
+      track.album?.images?.[1]?.url ?? track.album?.images?.[0]?.url ?? null,
+    url: track.external_urls?.spotify ?? `https://open.spotify.com/track/${track.id}`,
     playedAt,
   };
 }
 
-export async function getNowPlaying(): Promise<NowPlaying | null> {
-  if (!isConfigured()) {
-    return null;
-  }
-
-  const token = await getAccessToken();
-  if (!token) {
-    return null;
-  }
-
+async function getNowPlaying(token: string): Promise<NowPlaying | null> {
   const response = await fetch(NOW_PLAYING_ENDPOINT, {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
@@ -100,37 +124,34 @@ export async function getNowPlaying(): Promise<NowPlaying | null> {
   }
 
   const data = (await response.json()) as {
-    is_playing: boolean;
+    is_playing?: boolean;
     currently_playing_type?: string;
     item: SpotifyTrackPayload | null;
   };
 
-  if (!data.item || data.currently_playing_type !== "track") {
+  if (data.currently_playing_type && data.currently_playing_type !== "track") {
+    return null;
+  }
+
+  const track = mapTrack(data.item);
+  if (!track) {
     return null;
   }
 
   return {
-    ...mapTrack(data.item),
-    isPlaying: data.is_playing,
+    ...track,
+    isPlaying: Boolean(data.is_playing),
   };
 }
 
-export async function getRecentlyPlayed(): Promise<SpotifyTrack[]> {
-  if (!isConfigured()) {
-    return [];
-  }
-
-  const token = await getAccessToken();
-  if (!token) {
-    return [];
-  }
-
+async function getRecentlyPlayed(token: string): Promise<SpotifyTrack[]> {
   const response = await fetch(RECENTLY_PLAYED_ENDPOINT, {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
 
   if (!response.ok) {
+    console.error("Spotify recently played failed", { status: response.status });
     return [];
   }
 
@@ -138,5 +159,25 @@ export async function getRecentlyPlayed(): Promise<SpotifyTrack[]> {
     items?: { track: SpotifyTrackPayload; played_at: string }[];
   };
 
-  return (data.items ?? []).map((item) => mapTrack(item.track, item.played_at));
+  return (data.items ?? [])
+    .map((item) => mapTrack(item.track, item.played_at))
+    .filter((track): track is SpotifyTrack => track !== null);
+}
+
+export async function getSpotifySnapshot(): Promise<SpotifySnapshot> {
+  if (!isConfigured()) {
+    return { status: "missing_env", nowPlaying: null, recentlyPlayed: [] };
+  }
+
+  const { token, status } = await getAccessToken();
+  if (!token) {
+    return { status, nowPlaying: null, recentlyPlayed: [] };
+  }
+
+  const [nowPlaying, recentlyPlayed] = await Promise.all([
+    getNowPlaying(token),
+    getRecentlyPlayed(token),
+  ]);
+
+  return { status: "ok", nowPlaying, recentlyPlayed };
 }

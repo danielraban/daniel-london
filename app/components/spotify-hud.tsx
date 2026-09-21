@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { NowPlaying, SpotifyTrack } from "@/lib/spotify";
+import type { NowPlaying, SpotifyAuthStatus, SpotifyTrack } from "@/lib/spotify";
 
 function AlbumArt({
   src,
@@ -27,13 +27,32 @@ function AlbumArt({
   );
 }
 
-export function NowPlayingCard({ track }: { track: NowPlaying | null }) {
+export function NowPlayingCard({
+  track,
+  status,
+}: {
+  track: NowPlaying | null;
+  status: SpotifyAuthStatus;
+}) {
+  const authFailed = status !== "ok";
+
   return (
     <section className="pixel-panel p-4 sm:p-5">
       <p className="font-pixel mb-4 text-[10px] tracking-widest text-magenta">
-        {track ? (track.isPlaying ? "NOW PLAYING" : "PAUSED") : "NOW PLAYING: ---"}
+        {authFailed
+          ? "STEREO UNPLUGGED"
+          : track
+            ? track.isPlaying
+              ? "NOW PLAYING"
+              : "PAUSED"
+            : "NOW PLAYING: ---"}
       </p>
-      {track ? (
+      {authFailed ? (
+        <p className="text-muted">
+          Spotify login expired. Once a new refresh token is on Vercel, this
+          cartridge will play again.
+        </p>
+      ) : track ? (
         <a
           href={track.url}
           target="_blank"
@@ -50,20 +69,30 @@ export function NowPlayingCard({ track }: { track: NowPlaying | null }) {
           </div>
         </a>
       ) : (
-        <p className="text-muted">No cassette in the deck. Check back when the stereo is on.</p>
+        <p className="text-muted">
+          No cassette in the deck. Check back when the stereo is on.
+        </p>
       )}
     </section>
   );
 }
 
-export function RecentlyPlayedList({ tracks }: { tracks: SpotifyTrack[] }) {
+export function RecentlyPlayedList({
+  tracks,
+  status,
+}: {
+  tracks: SpotifyTrack[];
+  status: SpotifyAuthStatus;
+}) {
   return (
     <section className="pixel-panel p-4 sm:p-5">
       <p className="font-pixel mb-4 text-[10px] tracking-widest text-cyan">
         RECENTLY PLAYED
       </p>
-      {tracks.length === 0 ? (
-        <p className="text-muted">SIGNAL LOST. No recent tracks to display.</p>
+      {status !== "ok" ? (
+        <p className="text-muted">SIGNAL LOST. Spotify needs a new login.</p>
+      ) : tracks.length === 0 ? (
+        <p className="text-muted">No recent tracks to display.</p>
       ) : (
         <ol className="space-y-3">
           {tracks.map((track, index) => (
