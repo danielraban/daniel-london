@@ -22,6 +22,10 @@ export default function AboutPage() {
       ))}
       <div className="flex flex-wrap gap-3">
         <PixelButton href="/work">VIEW WORK</PixelButton>
+        <PixelButton href="/projects" variant="magenta">
+          PROJECTS
+        </PixelButton>
+        <PixelButton href="/uses">USES</PixelButton>
         <DownloadCv />
       </div>
     </div>

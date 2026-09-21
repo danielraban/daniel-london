@@ -24,6 +24,10 @@ export const profile = {
       body: "I build and modernise customer-facing systems end to end — frontend, APIs, and cloud. Most of my recent work is about taking legacy applications apart and putting them back together as modular, independently deployable pieces that teams can actually ship against. I have led squads in both the UK and the US, and I still like being close to the code.",
     },
     {
+      title: "PRODUCTS",
+      body: "Outside client work I ship my own products. Oku is a mental health companion launching in the UK. Blood Against Blackout is a live recovery meeting finder. Both are in the projects cartridge.",
+    },
+    {
       title: "AI IN THE LOOP",
       body: "I care about using AI as a serious engineering tool, not a gimmick. At work that means agentic coding workflows with Cursor, Claude Code, MCP, and project memory so a team can move faster without lowering the bar. Off the clock I keep reading about the ethical side of the same technology — what we automate, who it serves, and what we should refuse to build.",
     },

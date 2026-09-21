@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { profile } from "@/lib/content/profile";
 import { Nav } from "./nav";
 
@@ -13,8 +14,14 @@ export function SiteShell({ children }: { children: ReactNode }) {
         </header>
         <Nav />
         <main className="flex-1 pb-10">{children}</main>
-        <footer className="mt-auto border-t-2 border-panel-2 pt-4 font-pixel text-[8px] leading-5 tracking-widest text-muted">
-          INSERT COIN · {new Date().getFullYear()} · {profile.location.toUpperCase()}
+        <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t-2 border-panel-2 pt-4 font-pixel text-[8px] leading-5 tracking-widest text-muted">
+          <span>
+            INSERT COIN · {new Date().getFullYear()} ·{" "}
+            {profile.location.toUpperCase()}
+          </span>
+          <Link href="/uses" className="text-cyan hover:text-magenta">
+            USES
+          </Link>
         </footer>
       </div>
     </div>

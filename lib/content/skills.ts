@@ -27,4 +27,8 @@ export const skillGroups = [
     title: "AI TOOLING",
     items: ["Claude Code", "Cursor", "MCP", "AI Agents", "Prompt Engineering"],
   },
+  {
+    title: "TESTING",
+    items: ["Jest", "Cypress", "Jasmine", "Karma", "E2E"],
+  },
 ] as const;
