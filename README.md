@@ -11,4 +11,7 @@ npm install
 npm run dev
 ```
 
-Spotify now-playing uses `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REFRESH_TOKEN`. Copy `.env.example` to `.env.local` if you are running that page locally.
+Copy `.env.example` to `.env.local` for local integrations:
+
+- Spotify now-playing: `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REFRESH_TOKEN`
+- GitHub lab (heatmap + higher rate limits): `GITHUB_TOKEN` — a fine-grained PAT with public repo and user profile read, or a classic token

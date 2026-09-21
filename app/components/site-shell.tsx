@@ -3,6 +3,7 @@ import Link from "next/link";
 import { profile } from "@/lib/content/profile";
 import { Nav } from "./nav";
 import { StereoHud } from "./stereo-hud";
+import { MatchHud } from "./match-hud";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
@@ -17,6 +18,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <main className="flex-1 pb-10">{children}</main>
         <footer className="mt-auto space-y-3 border-t-2 border-panel-2 pt-4">
           <StereoHud />
+          <MatchHud />
           <div className="flex flex-wrap items-center justify-between gap-3 font-pixel text-[8px] leading-5 tracking-widest text-muted">
             <span>
               INSERT COIN · {new Date().getFullYear()} ·{" "}

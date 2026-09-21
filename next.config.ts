@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "mosaic.scdn.co" },
       { protocol: "https", hostname: "image-cdn-ak.spotifycdn.com" },
       { protocol: "https", hostname: "image-cdn-fa.spotifycdn.com" },
+      { protocol: "https", hostname: "crests.football-data.org" },
+      { protocol: "https", hostname: "r2.thesportsdb.com" },
+      { protocol: "https", hostname: "www.thesportsdb.com" },
     ],
   },
   async headers() {

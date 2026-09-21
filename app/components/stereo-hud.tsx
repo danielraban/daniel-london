@@ -56,10 +56,10 @@ export function StereoHud() {
         ? "ON AIR"
         : "PAUSED"
       : "STEREO OFF";
-  const detail = track ? `${track.name} — ${track.artists}` : "NO SIGNAL";
+  const detail = track ? `${track.name} — ${track.artists}` : "";
   const aria = track
     ? `${label}: ${track.name} by ${track.artists}. Open music.`
-    : `${label}. Open music.`;
+    : "Stereo off. Open music.";
 
   return (
     <Link
@@ -67,11 +67,13 @@ export function StereoHud() {
       aria-label={aria}
       className="flex min-w-0 items-center gap-2 text-muted hover:text-cyan"
     >
-      <AlbumArt
-        src={track?.albumImage ?? null}
-        alt={track ? `${track.album} cover` : "No cassette"}
-        size="hud"
-      />
+      {track ? (
+        <AlbumArt
+          src={track.albumImage}
+          alt={`${track.album} cover`}
+          size="hud"
+        />
+      ) : null}
       <span
         className={`font-pixel shrink-0 text-[8px] tracking-widest ${
           track?.isPlaying ? "animate-blink text-magenta" : "text-cyan"
@@ -80,9 +82,11 @@ export function StereoHud() {
         {label}
       </span>
       <Equalizer playing={Boolean(track?.isPlaying)} />
-      <span className="min-w-0 truncate font-pixel text-[8px] tracking-widest">
-        {payload ? detail : "—"}
-      </span>
+      {detail ? (
+        <span className="min-w-0 truncate font-pixel text-[8px] tracking-widest">
+          {detail}
+        </span>
+      ) : null}
     </Link>
   );
 }

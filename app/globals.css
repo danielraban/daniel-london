@@ -178,3 +178,39 @@ body {
     height: 50%;
   }
 }
+
+.power-grid {
+  display: flex;
+  gap: 3px;
+  width: max-content;
+  padding-bottom: 0.25rem;
+}
+
+.power-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.power-cell {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: var(--color-panel);
+}
+
+.power-cell-1 {
+  background: var(--color-panel-2);
+}
+
+.power-cell-2 {
+  background: var(--color-shadow);
+}
+
+.power-cell-3 {
+  background: var(--color-magenta);
+}
+
+.power-cell-4 {
+  background: var(--color-cyan);
+}
