@@ -1,129 +1,43 @@
-import Badge from './components/badge';
-import Link from 'next/link';
-import React from 'react';
-export default function Page() {
+import { DownloadCv } from "./components/download-cv";
+import { PixelButton } from "./components/pixel-button";
+import { profile } from "@/lib/content/profile";
+
+export default function HomePage() {
   return (
-    <div>
-      <section>
-        <h1 className="font-medium text-2xl mb-8 tracking-tighter">
-          👋 welcome, i'm daniel!
-        </h1>
-        <p className="prose prose-neutral dark:prose-invert">
-          As a Senior Software Engineer specializing in full stack development,
-          I wield a diverse toolkit that includes{' '}
-          <span className="not-prose">
-            <Badge href="https://spring.io/">
-              <img
-                className="!mr-1"
-                style={{ width: 14, height: 14 }}
-                src="/spring-boot.svg"
-              />
-              Java
-            </Badge>
-          </span>
-          ,{' '}
-          <Badge href="https://angular.io">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/angular.svg"
-            />
-            Angular
-          </Badge>
-          ,{' '}
-          <Badge href="https://react.dev">
-            <svg
-              width="14"
-              height="14"
-              role="img"
-              aria-label="React logo"
-              className="!mr-1"
-            >
-              <use href="/sprite.svg#react" />
-            </svg>
-            React
-          </Badge>
-          ,{' '}
-          <Badge href="https://typescriptlang.org">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/ts.svg"
-            />
-            Typescript
-          </Badge>
-          ,{' '}
-          <Badge href="https://typescriptlang.org">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/python.svg"
-            />
-            Python
-          </Badge>
-          , &{' '}
-          <Badge href="https://nodejs.org/">
-            <img
-              className="!mr-1"
-              style={{ width: 14, height: 14 }}
-              src="/nodejs.svg"
-            />
-            Node
-          </Badge>
-          . My passion for technology extends into AI, where I explore its
-          ethical implications and potential societal impacts. Beyond
-          technology, I'm deeply connected to the vibrant worlds of techno and
-          house music, and revel in creating AI-generated art. Living in East
-          London, I embrace every experience with honesty and tenacity, always
-          ready to learn from life's challenges and explore new cultures.
+    <div className="space-y-6">
+      <section className="pixel-panel px-4 py-8 text-center sm:px-8 sm:py-10">
+        <p className="font-pixel mb-4 text-[10px] tracking-[0.3em] text-cyan">
+          STAGE 1
         </p>
-        <Link
-          key={'/about'}
-          href={'/about'}
-          className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1"
-        >
-          read my full bio
-        </Link>
+        <h1 className="font-pixel text-lg leading-8 text-neon sm:text-2xl sm:leading-12">
+          {profile.name.toUpperCase()}
+        </h1>
+        <p className="font-pixel mt-4 text-[10px] leading-5 text-magenta sm:text-xs">
+          {profile.headline.toUpperCase()}
+        </p>
+        <p className="mx-auto mt-4 max-w-md text-muted">{profile.tagline}</p>
       </section>
-      <hr className="my-6 border-neutral-100 dark:border-neutral-800" />
-      <section>
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="/images/aod.png"
-              alt=""
-            />
+
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {profile.stats.map((stat) => (
+          <div key={stat.label} className="pixel-panel px-3 py-4 text-center">
+            <p className="font-pixel text-xl text-cyan sm:text-2xl">{stat.value}</p>
+            <p className="font-pixel mt-2 text-[8px] leading-4 text-muted">
+              {stat.label}
+            </p>
           </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="/images/apoc.png"
-              alt=""
-            />
-          </div>
-          {/* <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg"
-              alt=""
-            />
-          </div>
-          <div>
-            <img
-              className="h-auto max-w-full rounded-lg"
-              src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg"
-              alt=""
-            />
-          </div> */}
+        ))}
+      </section>
+
+      <section className="pixel-panel p-5 sm:p-6">
+        <p className="text-lg leading-7">{profile.summary}</p>
+        <p className="font-pixel animate-blink mt-6 text-center text-[10px] tracking-widest text-cyan">
+          PRESS START
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <PixelButton href="/about">ENTER</PixelButton>
+          <DownloadCv />
         </div>
-        <Link
-          key={'/artwork'}
-          href={'/artwork'}
-          className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1"
-        >
-          see more of my artwork
-        </Link>
       </section>
     </div>
   );

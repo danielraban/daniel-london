@@ -1,52 +1,43 @@
-import Link from 'next/link';
+"use client";
 
-const navItems = {
-  '/': {
-    name: 'home',
-  },
-  '/about': {
-    name: 'about',
-  },
-  '/artwork': {
-    name: 'artwork',
-  },
-  '/blog': {
-    name: 'blog',
-  },
-  '/music': {
-    name: 'music',
-  },
-  '/work': {
-    name: 'work',
-  },
-  // '/guestbook': {
-  //   name: 'guestbook',
-  // },
-};
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export function Navbar() {
+const items = [
+  { href: "/", label: "HOME" },
+  { href: "/about", label: "ABOUT" },
+  { href: "/work", label: "WORK" },
+  { href: "/music", label: "MUSIC" },
+  { href: "/contact", label: "CONTACT" },
+] as const;
+
+export function Nav() {
+  const pathname = usePathname();
+
   return (
-    <aside className="-ml-[8px] mb-16 tracking-tight">
-      <div className="lg:sticky lg:top-20">
-        <nav
-          className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
-          id="nav"
-        >
-          <div className="flex flex-row space-x-0 pr-10">
-            {Object.entries(navItems).map(([path, { name }]) => {
-              return (
-                <Link
-                  key={path}
-                  href={path}
-                  className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2"
-                >
-                  {name}
-                </Link>
-              );
-            })}
-          </div>
-        </nav>
-      </div>
-    </aside>
+    <nav
+      aria-label="Main"
+      className="pixel-panel mb-6 flex flex-wrap items-center gap-1 px-2 py-2"
+    >
+      {items.map((item) => {
+        const active =
+          item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`font-pixel px-2 py-2 text-[10px] leading-none tracking-widest ${
+              active
+                ? "bg-magenta text-void"
+                : "text-neon hover:bg-panel-2 hover:text-cyan"
+            }`}
+            aria-current={active ? "page" : undefined}
+          >
+            {active ? `>${item.label}` : item.label}
+          </Link>
+        );
+      })}
+    </nav>
   );
 }

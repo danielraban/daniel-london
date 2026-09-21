@@ -1,75 +1,51 @@
-import './global.css';
-
-import { Analytics } from '@vercel/analytics/react';
-import { GeistMono } from 'geist/font/mono';
-import { GeistSans } from 'geist/font/sans';
-import type { Metadata } from 'next';
-import { Navbar } from './components/nav';
-import { SandpackCSS } from './blog/[slug]/sandpack';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SiteShell } from "./components/site-shell";
+import { pressStart, vt323 } from "@/lib/fonts";
+import { profile } from "@/lib/content/profile";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://daniel.london'),
+  metadataBase: new URL(profile.site),
   title: {
-    default: 'Daniel Raban',
-    template: '%s | Daniel Raban',
+    default: `${profile.name} · ${profile.headline}`,
+    template: `%s | ${profile.name}`,
   },
-  description: 'Developer, writer, and creator.',
+  description: profile.summary,
   openGraph: {
-    title: 'Daniel Raban',
-    description: 'Developer, writer, and creator.',
-    url: 'https://daniel.london',
-    siteName: 'Daniel Raban',
-    locale: 'en_US',
-    type: 'website',
+    title: `${profile.name} · ${profile.headline}`,
+    description: profile.summary,
+    url: profile.site,
+    siteName: profile.name,
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${profile.name} · ${profile.headline}`,
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  twitter: {
-    title: 'Daniel Raban',
-    card: 'summary_large_image',
-  },
-  verification: {
-    google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',
-    yandex: '14d2e73487fa6c71',
   },
 };
 
-const cx = (...classes) => classes.filter(Boolean).join(' ');
+export const viewport: Viewport = {
+  themeColor: "#07040f",
+  colorScheme: "dark",
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
-      className={cx(
-        'text-black bg-white dark:text-white dark:bg-[#111010]',
-        GeistSans.variable,
-        GeistMono.variable
-      )}
+      lang="en-GB"
+      className={`${pressStart.variable} ${vt323.variable} h-full`}
     >
-      <head>
-        <SandpackCSS />
-      </head>
-      <body className="antialiased max-w-2xl mb-40 flex flex-col md:flex-row mx-4 mt-8 lg:mx-auto">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
-          <Navbar />
-          {children}
-          <Analytics />
-          <SpeedInsights />
-        </main>
+      <body className="min-h-full">
+        <SiteShell>{children}</SiteShell>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

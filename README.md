@@ -1,57 +1,14 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fleerob%2Fdaniel.london)
-
 # daniel.london
 
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Database**: [Postgres](https://vercel.com/postgres)
-- **Authentication**: [NextAuth.js](https://next-auth.js.org)
-- **Deployment**: [Vercel](https://vercel.com)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com)
-- **Analytics**: [Vercel Analytics](https://vercel.com/analytics)
+Personal site for Daniel Raban — senior software engineer in East London.
 
-## Running Locally
+Built with Next.js 16, Tailwind CSS v4, and a dark 8-bit HUD aesthetic.
 
-This application requires Node.js v18.17+.
+## Local
 
 ```bash
-git clone https://github.com/danielraban/daniel.london.git
-cd daniel.london
-bun install
-bun run setup # Remove all of my personal information
-bun dev
+npm install
+npm run dev
 ```
 
-Create a `.env.local` file similar to [`.env.example`](https://github.com/leerob/daniel.london/blob/main/.env.example).
-
-## Database Schema
-
-```sql
-CREATE TABLE redirects (
-  id SERIAL PRIMARY KEY,
-  source VARCHAR(255) NOT NULL,
-  destination VARCHAR(255) NOT NULL,
-  permanent BOOLEAN NOT NULL
-);
-
-CREATE TABLE guestbook (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
-  body TEXT NOT NULL,
-  created_by VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP NOT NULL,
-  updated_at TIMESTAMP
-);
-
-CREATE TABLE views (
-  slug VARCHAR(255) PRIMARY KEY,
-  count INT NOT NULL
-);
-```
-
-## License
-
-1. You are free to use this code as inspiration.
-2. Please do not copy it directly.
-3. Crediting the author is appreciated.
-
-Please remove all of my personal information (blog posts, images, etc.) by running `bun run setup`.
+Spotify now-playing uses `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and `SPOTIFY_REFRESH_TOKEN`. Copy `.env.example` to `.env.local` if you are running that page locally.

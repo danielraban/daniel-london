@@ -1,22 +1,32 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import { PixelButton } from "./components/pixel-button";
 
-export default function Error({
-  error,
+export default function ErrorPage({
   reset,
 }: {
-  error: Error;
+  error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
-
   return (
-    <div>
-      <p>Oh no, something went wrong... maybe refresh?</p>
+    <div className="pixel-panel px-5 py-10 text-center">
+      <p className="font-pixel text-[10px] tracking-widest text-magenta">
+        SYSTEM ERROR
+      </p>
+      <h1 className="font-pixel mt-4 text-sm leading-7 text-neon">
+        GAME OVER
+      </h1>
+      <p className="mt-4 text-muted">Something crashed this stage.</p>
+      <div className="mt-6 flex justify-center">
+        <button type="button" className="pixel-button" onClick={reset}>
+          RETRY
+        </button>
+      </div>
+      <div className="mt-3 flex justify-center">
+        <PixelButton href="/" variant="magenta">
+          HOME
+        </PixelButton>
+      </div>
     </div>
   );
 }

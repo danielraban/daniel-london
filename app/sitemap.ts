@@ -1,15 +1,11 @@
-import { getBlogPosts } from 'app/db/blog';
+import type { MetadataRoute } from "next";
+import { profile } from "@/lib/content/profile";
 
-export default async function sitemap() {
-  let blogs = getBlogPosts().map((post) => ({
-    url: `https://daniel.london/blog/${post.slug}`,
-    lastModified: post.metadata.publishedAt,
+export default function sitemap(): MetadataRoute.Sitemap {
+  const routes = ["", "/about", "/work", "/music", "/contact"];
+
+  return routes.map((route) => ({
+    url: `${profile.site}${route}`,
+    lastModified: new Date(),
   }));
-
-  let routes = ['', '/blog', '/about', 'music', 'art', '/guestbook', '/uses', '/work'].map((route) => ({
-    url: `https://daniel.london${route}`,
-    lastModified: new Date().toISOString().split('T')[0],
-  }));
-
-  return [...routes, ...blogs];
 }

@@ -1,11 +1,12 @@
-export default function robots() {
+import type { MetadataRoute } from "next";
+import { profile } from "@/lib/content/profile";
+
+export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      {
-        userAgent: '*',
-      },
-    ],
-    sitemap: 'https://daniel.london/sitemap.xml',
-    host: 'https://daniel.london',
+    rules: {
+      userAgent: "*",
+      allow: "/",
+    },
+    sitemap: `${profile.site}/sitemap.xml`,
   };
 }
