@@ -4,7 +4,6 @@ import { featuredRepos, githubUser, type FeaturedRepo } from "@/lib/content/gith
 const GITHUB_API = "https://api.github.com";
 const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 const REVALIDATE_SECONDS = 3600;
-const SAVE_LIMIT = 8;
 
 export type GitHubAuthStatus = "ok" | "missing_token" | "error";
 
@@ -34,20 +33,20 @@ export type ContributionGrid = {
   weeks: ContributionWeek[];
 };
 
-export type RecentSave = {
-  id: string;
-  repo: string;
-  message: string;
+export type SaveSlot = {
+  slot: number;
+  title: string;
+  fullName: string;
+  message: string | null;
   url: string;
-  at: string;
-  kind: "PUSH" | "PR";
+  at: string | null;
 };
 
 export type GitHubSnapshot = {
   status: GitHubAuthStatus;
   gridStatus: GitHubAuthStatus;
   cartridges: RepoCartridge[];
-  saves: RecentSave[];
+  slots: SaveSlot[];
   grid: ContributionGrid | null;
 };
 
@@ -138,86 +137,51 @@ async function getRepoCartridge(featured: FeaturedRepo): Promise<RepoCartridge> 
   }
 }
 
-type GitHubEvent = {
-  id: string;
-  type: string | null;
-  created_at: string;
-  repo: { name: string };
-  payload?: {
-    commits?: { sha: string; message: string }[];
-    action?: string;
-    pull_request?: {
-      html_url?: string;
-      title?: string;
-      number?: number;
-    };
+async function getSaveSlot(
+  featured: FeaturedRepo,
+  index: number,
+): Promise<SaveSlot> {
+  const empty: SaveSlot = {
+    slot: index + 1,
+    title: featured.title,
+    fullName: `${featured.owner}/${featured.name}`,
+    message: null,
+    url: featured.fallbackUrl,
+    at: null,
   };
-};
 
-function mapEvent(event: GitHubEvent): RecentSave | null {
-  if (event.type === "PushEvent") {
-    const commits = event.payload?.commits ?? [];
-    const last = commits[commits.length - 1];
-    if (!last?.message) {
-      return null;
-    }
-    const message = last.message.split("\n")[0] ?? last.message;
-    return {
-      id: event.id,
-      repo: event.repo.name,
-      message,
-      url: `https://github.com/${event.repo.name}/commit/${last.sha}`,
-      at: event.created_at,
-      kind: "PUSH",
-    };
-  }
-
-  if (event.type === "PullRequestEvent") {
-    const pr = event.payload?.pull_request;
-    if (!pr?.title || !pr.html_url) {
-      return null;
-    }
-    const action = event.payload?.action ?? "updated";
-    return {
-      id: event.id,
-      repo: event.repo.name,
-      message: `${action} #${pr.number ?? ""} ${pr.title}`.trim(),
-      url: pr.html_url,
-      at: event.created_at,
-      kind: "PR",
-    };
-  }
-
-  return null;
-}
-
-async function getRecentSaves(): Promise<RecentSave[]> {
   try {
     const response = await githubFetch(
-      `${GITHUB_API}/users/${githubUser}/events/public?per_page=30`,
+      `${GITHUB_API}/repos/${featured.owner}/${featured.name}/commits?per_page=1`,
     );
 
     if (!response.ok) {
-      return [];
+      return empty;
     }
 
-    const events = (await response.json()) as GitHubEvent[];
-    const saves: RecentSave[] = [];
+    const commits = (await response.json()) as {
+      html_url?: string;
+      commit?: {
+        message?: string;
+        author?: { date?: string };
+        committer?: { date?: string };
+      };
+    }[];
+    const commit = commits[0];
+    const message = commit?.commit?.message?.split("\n")[0]?.trim();
 
-    for (const event of events) {
-      const save = mapEvent(event);
-      if (!save) {
-        continue;
-      }
-      saves.push(save);
-      if (saves.length >= SAVE_LIMIT) {
-        break;
-      }
+    if (!commit || !message) {
+      return empty;
     }
 
-    return saves;
+    return {
+      ...empty,
+      message,
+      url: commit.html_url ?? empty.url,
+      at: commit.commit?.committer?.date ?? commit.commit?.author?.date ?? null,
+    };
   } catch {
-    return [];
+    return empty;
   }
 }
 
@@ -313,9 +277,9 @@ async function getContributionGrid(): Promise<{
 }
 
 export const getGitHubSnapshot = cache(async (): Promise<GitHubSnapshot> => {
-  const [cartridges, saves, heatmap] = await Promise.all([
+  const [cartridges, slots, heatmap] = await Promise.all([
     Promise.all(featuredRepos.map(getRepoCartridge)),
-    getRecentSaves(),
+    Promise.all(featuredRepos.map(getSaveSlot)),
     getContributionGrid(),
   ]);
 
@@ -323,7 +287,7 @@ export const getGitHubSnapshot = cache(async (): Promise<GitHubSnapshot> => {
     status: token() ? "ok" : "missing_token",
     gridStatus: heatmap.status,
     cartridges,
-    saves,
+    slots,
     grid: heatmap.grid,
   };
 });

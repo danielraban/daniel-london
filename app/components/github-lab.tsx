@@ -2,8 +2,8 @@ import { PixelButton } from "./pixel-button";
 import type {
   ContributionGrid,
   GitHubAuthStatus,
-  RecentSave,
   RepoCartridge,
+  SaveSlot,
 } from "@/lib/github";
 import { formatRelative } from "@/lib/github";
 
@@ -105,34 +105,63 @@ export function PowerGrid({
   );
 }
 
-export function RecentSaves({ saves }: { saves: RecentSave[] }) {
+export function ContinueSlots({ slots }: { slots: SaveSlot[] }) {
   return (
     <section className="pixel-panel p-4 sm:p-5">
       <h2 className="font-pixel mb-4 text-[10px] tracking-widest text-cyan">
-        RECENT SAVES
+        CONTINUE?
       </h2>
-      {saves.length === 0 ? (
-        <p className="text-muted">No public saves on this channel.</p>
-      ) : (
-        <ol className="space-y-3">
-          {saves.map((save) => (
-            <li key={save.id}>
-              <a
-                href={save.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block hover:text-cyan"
-              >
+      <ol className="space-y-4">
+        {slots.map((slot, index) => {
+          const loaded = Boolean(slot.message && slot.at);
+          const inner = (
+            <>
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-pixel text-[8px] tracking-widest text-magenta">
-                  {save.kind} · {save.repo.toUpperCase()} ·{" "}
-                  {formatRelative(save.at)}
+                  SLOT {String(slot.slot).padStart(2, "0")}
                 </p>
-                <p className="mt-1 truncate">{save.message}</p>
-              </a>
+                <p className="font-pixel text-[8px] tracking-widest text-cyan">
+                  {loaded && slot.at ? formatRelative(slot.at) : "— NO FILE —"}
+                </p>
+              </div>
+              <h3
+                className={
+                  slot.title.length > 14
+                    ? "mt-2 text-xl leading-6 text-neon"
+                    : "font-pixel mt-2 text-[11px] leading-5 text-neon"
+                }
+              >
+                {slot.title.length > 14
+                  ? slot.title
+                  : slot.title.toUpperCase()}
+              </h3>
+              {loaded ? (
+                <p className="mt-1 leading-6">{slot.message}</p>
+              ) : null}
+            </>
+          );
+
+          return (
+            <li
+              key={slot.fullName}
+              className={index > 0 ? "border-t-2 border-panel-2 pt-4" : undefined}
+            >
+              {loaded ? (
+                <a
+                  href={slot.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block hover:text-cyan"
+                >
+                  {inner}
+                </a>
+              ) : (
+                inner
+              )}
             </li>
-          ))}
-        </ol>
-      )}
+          );
+        })}
+      </ol>
     </section>
   );
 }
