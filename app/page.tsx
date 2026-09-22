@@ -17,15 +17,15 @@ const stages = [
   },
   {
     id: "03",
-    label: "MUSIC",
-    href: "/music",
-    hint: "Now playing",
+    label: "LAB",
+    href: "/lab",
+    hint: "Cartridges and power grid",
   },
   {
     id: "04",
-    label: "CONTACT",
-    href: "/contact",
-    hint: "Email and links",
+    label: "MUSIC",
+    href: "/music",
+    hint: "Now playing",
   },
 ] as const;
 
