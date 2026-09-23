@@ -2,24 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import type { NextMatch, NextMatchSnapshot } from "@/lib/football";
-
-function formatKickoff(iso: string) {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) {
-    return "";
-  }
-  return new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Europe/London",
-    weekday: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  })
-    .format(date)
-    .replace(",", "")
-    .toUpperCase();
-}
+import { matchLine, type NextMatchSnapshot } from "@/lib/football";
 
 function Crest({ src, alt }: { src: string | null; alt: string }) {
   return (
@@ -36,14 +19,6 @@ function Crest({ src, alt }: { src: string | null; alt: string }) {
       ) : null}
     </div>
   );
-}
-
-function matchLine(match: NextMatch) {
-  const live = match.status === "IN_PLAY" || match.status === "PAUSED";
-  if (live && match.homeScore !== null && match.awayScore !== null) {
-    return `${match.homeTla} ${match.homeScore}-${match.awayScore} ${match.awayTla}`;
-  }
-  return `${match.homeTla} vs ${match.awayTla} · ${formatKickoff(match.utcDate)}`;
 }
 
 export function MatchHud() {

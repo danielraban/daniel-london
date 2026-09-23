@@ -22,7 +22,7 @@ export type NextMatchSnapshot = {
   match: NextMatch | null;
 };
 
-type SportsDbEvent = {
+export type SportsDbEvent = {
   strTimestamp?: string;
   dateEvent?: string;
   strTime?: string;
@@ -70,7 +70,7 @@ const TEAM_TLA: Record<string, string> = {
   "Fulham": "FUL",
 };
 
-function teamTla(name: string | undefined) {
+export function teamTla(name: string | undefined) {
   if (!name) {
     return "???";
   }
@@ -85,7 +85,7 @@ function teamTla(name: string | undefined) {
   return cleaned.slice(0, 3).toUpperCase();
 }
 
-function toIso(event: SportsDbEvent) {
+export function toIso(event: SportsDbEvent) {
   if (event.strTimestamp) {
     return event.strTimestamp.endsWith("Z")
       ? event.strTimestamp
@@ -97,7 +97,7 @@ function toIso(event: SportsDbEvent) {
   return event.dateEvent ? `${event.dateEvent}T12:00:00Z` : "";
 }
 
-function parseScore(value: string | number | null | undefined) {
+export function parseScore(value: string | number | null | undefined) {
   if (value === null || value === undefined || value === "") {
     return null;
   }
@@ -105,7 +105,7 @@ function parseScore(value: string | number | null | undefined) {
   return Number.isFinite(n) ? n : null;
 }
 
-function mapStatus(status: string | null | undefined): NextMatch["status"] {
+export function mapStatus(status: string | null | undefined): NextMatch["status"] {
   const code = (status ?? "NS").toUpperCase();
   if (code === "1H" || code === "2H" || code === "ET" || code === "P" || code === "LIVE") {
     return "IN_PLAY";
@@ -119,7 +119,7 @@ function mapStatus(status: string | null | undefined): NextMatch["status"] {
   return "OTHER";
 }
 
-function mapEvent(event: SportsDbEvent): NextMatch | null {
+export function mapEvent(event: SportsDbEvent): NextMatch | null {
   const utcDate = toIso(event);
   if (!utcDate || !event.strHomeTeam || !event.strAwayTeam) {
     return null;
@@ -139,6 +139,31 @@ function mapEvent(event: SportsDbEvent): NextMatch | null {
     awayScore: live ? parseScore(event.intAwayScore) : null,
     competition: event.strLeague ?? null,
   };
+}
+
+export function formatKickoff(iso: string) {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/London",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })
+    .format(date)
+    .replace(",", "")
+    .toUpperCase();
+}
+
+export function matchLine(match: NextMatch) {
+  const live = match.status === "IN_PLAY" || match.status === "PAUSED";
+  if (live && match.homeScore !== null && match.awayScore !== null) {
+    return `${match.homeTla} ${match.homeScore}-${match.awayScore} ${match.awayTla}`;
+  }
+  return `${match.homeTla} vs ${match.awayTla} · ${formatKickoff(match.utcDate)}`;
 }
 
 async function fetchEvents(url: string, key: "events" | "results") {

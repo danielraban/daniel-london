@@ -74,7 +74,7 @@ async function githubFetch(url: string) {
   });
 }
 
-function mapLevel(level: string | undefined): ContributionDay["level"] {
+export function mapLevel(level: string | undefined): ContributionDay["level"] {
   switch (level) {
     case "FIRST_QUARTILE":
       return 1;
@@ -89,7 +89,7 @@ function mapLevel(level: string | undefined): ContributionDay["level"] {
   }
 }
 
-function fallbackCartridge(featured: FeaturedRepo): RepoCartridge {
+export function fallbackCartridge(featured: FeaturedRepo): RepoCartridge {
   return {
     title: featured.title,
     description: featured.fallbackDescription,

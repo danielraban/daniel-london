@@ -52,13 +52,13 @@ const TOP_LIMIT = 8;
 const TOP_REVALIDATE_SECONDS = 3600;
 
 type SpotifyImage = { url: string };
-type SpotifyArtistPayload = {
+export type SpotifyArtistPayload = {
   id?: string;
   name?: string;
   images?: SpotifyImage[];
   external_urls?: { spotify?: string };
 };
-type SpotifyTrackPayload = {
+export type SpotifyTrackPayload = {
   id?: string;
   name?: string;
   duration_ms?: number;
@@ -81,6 +81,13 @@ export function parseTimeRange(value: string | string[] | undefined) {
     return raw;
   }
   return DEFAULT_TIME_RANGE;
+}
+
+export function formatMs(ms: number) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const minutes = Math.floor(total / 60);
+  const seconds = total % 60;
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
 
 const getAccessToken = cache(
@@ -130,7 +137,7 @@ const getAccessToken = cache(
   },
 );
 
-function mapTrack(
+export function mapTrack(
   track: SpotifyTrackPayload | null | undefined,
   playedAt?: string,
 ): SpotifyTrack | null {
@@ -150,7 +157,7 @@ function mapTrack(
   };
 }
 
-function mapArtist(artist: SpotifyArtistPayload): SpotifyArtist | null {
+export function mapArtist(artist: SpotifyArtistPayload): SpotifyArtist | null {
   if (!artist.id || !artist.name) {
     return null;
   }
