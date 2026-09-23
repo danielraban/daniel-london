@@ -14,7 +14,7 @@ export const profile = {
     "Fullstack software engineer with 15 years' experience building customer-facing web applications in TypeScript, React, Angular, and Node.js, deployed on AWS, Azure, and Google Cloud. I specialise in replacing legacy systems with modern, modular architectures — and in leading the teams that ship them. Recent work spans micro frontends, cloud infrastructure as code, and agentic AI development workflows.",
   stats: [
     { value: "15", label: "YRS EXP" },
-    { value: "9", label: "COMPANIES" },
+    { value: "10", label: "COMPANIES" },
     { value: "3", label: "CLOUDS" },
     { value: "4", label: "TEAMS LED" },
   ],
