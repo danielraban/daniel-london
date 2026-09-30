@@ -6,18 +6,18 @@ export type Playlist = {
 
 export const playlists: Playlist[] = [
   {
-    name: "Techno Bunker",
+    name: "House",
+    tagline: "Peak time",
+    url: "https://open.spotify.com/playlist/37i9dQZF1EQpoj8u9Hn81e",
+  },
+  {
+    name: "Metal",
+    tagline: "Riffs and volume",
+    url: "https://open.spotify.com/playlist/37i9dQZF1EQpgT26jgbgRI",
+  },
+  {
+    name: "Techno",
     tagline: "Warehouse hours",
-    url: "https://open.spotify.com/playlist/37i9dQZF1DX6J5NfMJS675",
-  },
-  {
-    name: "mint",
-    tagline: "House and dance, peak time",
-    url: "https://open.spotify.com/playlist/37i9dQZF1DX4dyzvuaRJ0n",
-  },
-  {
-    name: "Deep House Relax",
-    tagline: "After the club",
-    url: "https://open.spotify.com/playlist/37i9dQZF1DX2TRYkJECvfC",
+    url: "https://open.spotify.com/playlist/2EUiSUBXlDIzSKiyXhF5hJ",
   },
 ];
